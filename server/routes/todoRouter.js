@@ -1,12 +1,11 @@
 import { Router } from "express";
 const todoRoute = new Router();
-import axios from "axios";
 import todoModel from "../models/todoModel.js";
  
 todoRoute.post('/post/todo', async (req, res) => {
-    const { title, description, status, author } = req.body;
+    const { title, description, author } = req.body;
 
-    if (!title || !description || !status || !author) {
+    if (!title || !description || !author) {
         return res.status(400).json({
             error: "All fields required"
         });
@@ -16,8 +15,8 @@ todoRoute.post('/post/todo', async (req, res) => {
         const todo = await todoModel.create({
             title,
             description,
-            status,
-            author
+            author,
+            status: false
         });
 
         res.status(201).json({
